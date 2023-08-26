@@ -24,11 +24,14 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private LocalDate dataUltimasFerias;
-
     private int diasTranscorridos;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "loja_id")
+    private Loja loja;
 
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
