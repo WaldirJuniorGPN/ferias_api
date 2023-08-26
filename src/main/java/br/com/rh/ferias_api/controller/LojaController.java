@@ -9,6 +9,7 @@ import br.com.rh.ferias_api.repository.LojaRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class LojaController {
     }
 
     @GetMapping
-    public ResponseEntity listar(Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemLoja>> listar(Pageable paginacao) {
         var page = repository.findAll(paginacao).map(DadosListagemLoja::new);
         return ResponseEntity.ok(page);
     }

@@ -11,6 +11,7 @@ public record DadosCadastroFuncionario(
         String nome,
         @NotNull
         LocalDate dataAdimissao,
+        LocalDate dataUltimasFerias,
         @NotNull
         Loja loja
 

@@ -14,6 +14,7 @@ public class ControleDeFeriasService {
     public void carregarDados(List<Funcionario> lista) {
         lista.forEach(this::calcularDiasTranscorridos);
         lista.forEach(this::atribuirStatus);
+        lista.forEach(funcionario -> System.out.println(funcionario.getDiasTranscorridos()));
     }
 
     private void calcularDiasTranscorridos(Funcionario funcionario) {
@@ -35,9 +36,9 @@ public class ControleDeFeriasService {
 
         if (diasTranscorridos < 360) {
             funcionario.setStatus(Status.REGULAR);
-        } else if (diasTranscorridos > 359 || diasTranscorridos < 690) {
+        } else if (diasTranscorridos > 359 && diasTranscorridos < 690) {
             funcionario.setStatus(Status.ATENÇÃO);
-        } else if (diasTranscorridos >= 720) {
+        } else if (diasTranscorridos > 719) {
             funcionario.setStatus(Status.DUAS_FERIAS_VENCIDAS);
         } else {
             funcionario.setStatus(Status.ALERTA_VERMELHO);

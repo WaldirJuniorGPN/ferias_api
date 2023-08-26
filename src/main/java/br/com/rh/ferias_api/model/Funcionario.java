@@ -36,6 +36,7 @@ public class Funcionario {
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
         this.dataAdmissao = dados.dataAdimissao();
+        this.dataUltimasFerias = dados.dataUltimasFerias();
         this.loja = dados.loja();
     }
 

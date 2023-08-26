@@ -10,6 +10,7 @@ import br.com.rh.ferias_api.service.ControleDeFeriasService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,12 +39,13 @@ public class FuncionariosController {
     }
 
     @GetMapping
-    public ResponseEntity listar(Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemFuncionario>> listar(Pageable paginacao) {
         var page = repository.findAll(paginacao).map((DadosListagemFuncionario::new));
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/lancar-dados")
+    @Transactional
     public ResponseEntity lancarDados() {
         var lista = repository.findAll();
         controle.carregarDados(lista);
