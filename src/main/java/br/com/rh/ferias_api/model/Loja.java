@@ -1,5 +1,6 @@
 package br.com.rh.ferias_api.model;
 
+import br.com.rh.ferias_api.dto.request.DadosCadastroLoja;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,4 +24,8 @@ public class Loja {
 
     @OneToMany(mappedBy = "loja")
     private List<Funcionario> funcionario;
+
+    public Loja(DadosCadastroLoja dados) {
+        this.nome = dados.nome();
+    }
 }
