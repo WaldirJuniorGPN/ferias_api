@@ -36,6 +36,7 @@ public class Funcionario {
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
         this.dataAdmissao = dados.dataAdimissao();
+        this.loja = dados.loja();
     }
 
     public void atualizar(DadosAtualizarFuncionario dados) {
@@ -47,6 +48,9 @@ public class Funcionario {
         }
         if (dados.ultimasFerias() != null) {
             this.dataUltimasFerias = dados.ultimasFerias();
+        }
+        if (dados.loja() != null) {
+            this.loja = dados.loja();
         }
     }
 
