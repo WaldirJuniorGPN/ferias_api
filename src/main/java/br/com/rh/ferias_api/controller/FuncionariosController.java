@@ -6,13 +6,20 @@ import br.com.rh.ferias_api.dto.response.DadosDetalhamentoFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosListagemFuncionario;
 import br.com.rh.ferias_api.model.Funcionario;
 import br.com.rh.ferias_api.repository.FuncionarioRepository;
+import br.com.rh.ferias_api.service.ControleDeFeriasService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
+import java.net.http.HttpClient;
 
 @RestController
 @RequestMapping("funcionarios")
@@ -20,6 +27,8 @@ public class FuncionariosController {
 
     @Autowired
     private FuncionarioRepository repository;
+    @Autowired
+    ControleDeFeriasService controle;
 
     @PostMapping
     @Transactional
@@ -35,6 +44,23 @@ public class FuncionariosController {
         var page = repository.findAll(paginacao).map((DadosListagemFuncionario::new));
         return ResponseEntity.ok(page);
     }
+
+    @GetMapping("/lancar-dados")
+    public ResponseEntity lancarDados() {
+        var lista = repository.findAll();
+        controle.carregarDados(lista);
+
+        // Redirecionamento para o método listar
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .replacePath("/funcionarios")
+                .build()
+                .toUri();
+
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+                .location(location)
+                .build();
+    }
+
 
     @PutMapping
     @Transactional

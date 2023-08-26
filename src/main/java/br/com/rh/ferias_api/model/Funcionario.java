@@ -24,6 +24,7 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private LocalDate dataUltimasFerias;
+
     private int diasTranscorridos;
 
     @Enumerated(EnumType.STRING)
@@ -44,5 +45,13 @@ public class Funcionario {
         if (dados.ultimasFerias() != null) {
             this.dataUltimasFerias = dados.ultimasFerias();
         }
+    }
+
+    public void setDiasTranscorridos(int diasTranscorridos) {
+        this.diasTranscorridos = diasTranscorridos;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
