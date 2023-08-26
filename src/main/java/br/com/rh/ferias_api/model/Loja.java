@@ -1,5 +1,6 @@
 package br.com.rh.ferias_api.model;
 
+import br.com.rh.ferias_api.dto.request.DadosAtualizacaoLoja;
 import br.com.rh.ferias_api.dto.request.DadosCadastroLoja;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,11 @@ public class Loja {
 
     public Loja(DadosCadastroLoja dados) {
         this.nome = dados.nome();
+    }
+
+    public void atualizar(DadosAtualizacaoLoja dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
     }
 }

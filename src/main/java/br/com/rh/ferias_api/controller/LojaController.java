@@ -1,5 +1,6 @@
 package br.com.rh.ferias_api.controller;
 
+import br.com.rh.ferias_api.dto.request.DadosAtualizacaoLoja;
 import br.com.rh.ferias_api.dto.request.DadosCadastroLoja;
 import br.com.rh.ferias_api.dto.response.DadosDetalhamentoLoja;
 import br.com.rh.ferias_api.dto.response.DadosListagemLoja;
@@ -22,7 +23,7 @@ public class LojaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroLoja dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroLoja dados, UriComponentsBuilder uriBuilder) {
         var loja = new Loja(dados);
         repository.save(loja);
         var uri = uriBuilder.path("/lojas/{id}").buildAndExpand(loja.getId()).toUri();
@@ -30,8 +31,22 @@ public class LojaController {
     }
 
     @GetMapping
-    public ResponseEntity listar(Pageable paginacao){
+    public ResponseEntity listar(Pageable paginacao) {
         var page = repository.findAll(paginacao).map(DadosListagemLoja::new);
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoLoja dados) {
+        var loja = repository.getReferenceById(dados.id());
+        loja.atualizar(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoLoja(loja));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@PathVariable Long id) {
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
