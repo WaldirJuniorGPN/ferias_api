@@ -12,17 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@RestController
+@Controller
 @RequestMapping("lojas")
 public class LojaController {
 
     @Autowired
     private LojaRepository repository;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroLoja dados, UriComponentsBuilder uriBuilder) {
         var loja = new Loja(dados);
@@ -32,12 +33,17 @@ public class LojaController {
     }
 
     @GetMapping
+    public String fomularioCadastro(){
+        return "lojas/cadastro";
+    }
+
+    @GetMapping("/listar")
     public ResponseEntity<Page<DadosListagemLoja>> listar(Pageable paginacao) {
         var page = repository.findAll(paginacao).map(DadosListagemLoja::new);
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping
+    @PutMapping("/atualizar")
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoLoja dados) {
         var loja = repository.getReferenceById(dados.id());
@@ -45,7 +51,7 @@ public class LojaController {
         return ResponseEntity.ok(new DadosDetalhamentoLoja(loja));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/excluir/{id}")
     public ResponseEntity deletar(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();

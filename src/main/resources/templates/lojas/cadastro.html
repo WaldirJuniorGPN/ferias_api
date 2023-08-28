@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Lojas</title>
+</head>
+<body>
+<h1>Cadastro de Lojas</h1>
+<label for="nome">Nome da Loja:</label>
+<input type="text" id="nome" name="nome" required>
+<button id="cadastrar">Cadastrar</button>
+<p id="mensagem"></p>
+
+<script>
+        document.getElementById("cadastrar").addEventListener("click", function() {
+            var nome = document.getElementById("nome").value;
+
+            if (nome.trim() === "") {
+                document.getElementById("mensagem").textContent = "É necessário inserir um nome para cadastrar uma loja.";
+                return;
+            }
+
+            var dados = { nome: nome };
+
+            fetch("/lojas/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("mensagem").textContent = "Loja cadastrada com sucesso!";
+            })
+            .catch(error => {
+                console.error("Erro ao cadastrar loja:", error);
+            });
+        });
+    </script>
+</body>
+</html>
