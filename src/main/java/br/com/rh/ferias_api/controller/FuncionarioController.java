@@ -2,11 +2,13 @@ package br.com.rh.ferias_api.controller;
 
 import br.com.rh.ferias_api.controller.dto.request.DadosCadastroFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosDetalhamentoFuncionario;
+import br.com.rh.ferias_api.dto.response.DadosListagemFuncionario;
 import br.com.rh.ferias_api.model.Funcionario;
 import br.com.rh.ferias_api.repository.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,6 @@ public class FuncionarioController {
         var uri = uriComponentsBuilder.path("funcionario/{id}").buildAndExpand(funcionario.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosDetalhamentoFuncionario(funcionario));
     }
+
+    public ResponseEntity<Page<DadosListagemFuncionario>> listar()
 }
