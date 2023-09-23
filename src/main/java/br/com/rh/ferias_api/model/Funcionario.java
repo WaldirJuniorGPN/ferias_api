@@ -1,6 +1,6 @@
 package br.com.rh.ferias_api.model;
 
-import br.com.rh.ferias_api.controller.dto.request.DadosCadastroFuncionario;
+import br.com.rh.ferias_api.repository.request.DadosCadastroFuncionario;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

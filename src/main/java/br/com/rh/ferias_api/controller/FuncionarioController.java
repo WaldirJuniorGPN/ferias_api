@@ -1,6 +1,6 @@
 package br.com.rh.ferias_api.controller;
 
-import br.com.rh.ferias_api.controller.dto.request.DadosCadastroFuncionario;
+import br.com.rh.ferias_api.repository.request.DadosCadastroFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosDetalhamentoFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosListagemFuncionario;
 import br.com.rh.ferias_api.model.Funcionario;
