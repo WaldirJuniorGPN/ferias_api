@@ -1,6 +1,7 @@
 package br.com.rh.ferias_api.controller;
 
-import br.com.rh.ferias_api.repository.request.DadosCadastroFuncionario;
+import br.com.rh.ferias_api.dto.request.DadosAtualizacaoFuncionario;
+import br.com.rh.ferias_api.dto.request.DadosCadastroFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosDetalhamentoFuncionario;
 import br.com.rh.ferias_api.dto.response.DadosListagemFuncionario;
 import br.com.rh.ferias_api.model.Funcionario;
@@ -9,11 +10,9 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RequestMapping("funcionario")
@@ -32,5 +31,23 @@ public class FuncionarioController {
         return ResponseEntity.created(uri).body(new DadosDetalhamentoFuncionario(funcionario));
     }
 
-    public ResponseEntity<Page<DadosListagemFuncionario>> listar()
+    @GetMapping
+    public ResponseEntity<Page<DadosListagemFuncionario>> listar(Pageable paginacao) {
+        var page = this.repository.findAll(paginacao).map(DadosListagemFuncionario::new);
+        return ResponseEntity.ok(page);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoFuncionario dados) {
+        var funcionario = this.repository.getReferenceById(dados.id());
+        funcionario.atualizarDadosFuncionario(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoFuncionario(funcionario));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@PathVariable Long id) {
+        this.repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

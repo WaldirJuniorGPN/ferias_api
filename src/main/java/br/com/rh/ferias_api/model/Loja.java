@@ -1,5 +1,7 @@
 package br.com.rh.ferias_api.model;
 
+import br.com.rh.ferias_api.dto.request.DadosAtualizacaoLoja;
+import br.com.rh.ferias_api.dto.request.DadosCadastroLoja;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,7 +24,17 @@ public class Loja {
     @OneToMany(mappedBy = "loja", cascade = CascadeType.ALL)
     private List<Funcionario> funcionarios;
 
+    public Loja(DadosCadastroLoja dados) {
+        this.nome = dados.nome();
+    }
+
     public void adicionarFuncionario(Funcionario funcionario) {
         funcionarios.add(funcionario);
+    }
+
+    public void atualizarLoja(DadosAtualizacaoLoja dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
     }
 }

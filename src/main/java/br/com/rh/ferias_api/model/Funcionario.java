@@ -1,6 +1,7 @@
 package br.com.rh.ferias_api.model;
 
-import br.com.rh.ferias_api.repository.request.DadosCadastroFuncionario;
+import br.com.rh.ferias_api.dto.request.DadosAtualizacaoFuncionario;
+import br.com.rh.ferias_api.dto.request.DadosCadastroFuncionario;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,5 +30,20 @@ public class Funcionario {
         this.dataAdimissao = dados.dataAdmissao();
         this.loja = dados.loja();
         this.loja.adicionarFuncionario(this);
+    }
+
+    public void atualizarDadosFuncionario(DadosAtualizacaoFuncionario dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.dataAdimissao() != null) {
+            this.dataAdimissao = dados.dataAdimissao();
+        }
+        if (dados.ultimaFerias() != null) {
+            this.ultimaFerias = dados.ultimaFerias();
+        }
+        if (dados.loja() != null) {
+            this.loja = dados.loja();
+        }
     }
 }
