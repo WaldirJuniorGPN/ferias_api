@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name = "Funcionario")
 @Table(name = "funcionarios")
@@ -20,10 +21,14 @@ public class Funcionario {
     private Long id;
     private String nome;
     private LocalDate dataAdimissao;
-    private LocalDate ultimaFerias;
     @ManyToOne
     @JoinColumn(name = "loja_id")
     private Loja loja;
+    private boolean fericasVencidas = false;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "funcionario_id")
+    private List<Ferias> ferias;
 
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
@@ -39,11 +44,12 @@ public class Funcionario {
         if (dados.dataAdimissao() != null) {
             this.dataAdimissao = dados.dataAdimissao();
         }
-        if (dados.ultimaFerias() != null) {
-            this.ultimaFerias = dados.ultimaFerias();
-        }
         if (dados.loja() != null) {
             this.loja = dados.loja();
         }
+    }
+
+    public void mudarStatusParaFeriasVencidas() {
+        this.fericasVencidas = true;
     }
 }

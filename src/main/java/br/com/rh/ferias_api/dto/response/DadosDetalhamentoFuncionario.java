@@ -5,8 +5,8 @@ import br.com.rh.ferias_api.model.Loja;
 
 import java.time.LocalDate;
 
-public record DadosDetalhamentoFuncionario(Long id, String nome, LocalDate dataAdmissao, LocalDate ultimaFerias, Loja loja) {
+public record DadosDetalhamentoFuncionario(Long id, String nome, LocalDate dataAdmissao, Loja loja) {
     public DadosDetalhamentoFuncionario(Funcionario funcionario){
-        this(funcionario.getId(), funcionario.getNome(), funcionario.getDataAdimissao(), funcionario.getUltimaFerias(), funcionario.getLoja());
+        this(funcionario.getId(), funcionario.getNome(), funcionario.getDataAdimissao(), funcionario.getLoja());
     }
 }

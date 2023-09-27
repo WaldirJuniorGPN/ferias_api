@@ -12,7 +12,6 @@ public record DadosAtualizacaoFuncionario(
         @NotBlank
         String nome,
         LocalDate dataAdimissao,
-        LocalDate ultimaFerias,
         Loja loja
 ) {
 }
