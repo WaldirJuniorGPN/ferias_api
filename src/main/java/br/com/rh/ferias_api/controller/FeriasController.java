@@ -43,4 +43,10 @@ public class FeriasController {
         var page = this.repository.findAll(paginacao).map(DadosListagemFerias::new);
         return ResponseEntity.ok(page);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@PathVariable Long id) {
+        this.repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

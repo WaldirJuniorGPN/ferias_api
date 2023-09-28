@@ -24,17 +24,24 @@ public class Funcionario {
     @ManyToOne
     @JoinColumn(name = "loja_id")
     private Loja loja;
-    private boolean fericasVencidas = false;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "funcionario_id")
     private List<Ferias> ferias;
+
+    public void setStatus(StatusDeFerias status) {
+        this.status = status;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private StatusDeFerias status;
 
     public Funcionario(DadosCadastroFuncionario dados) {
         this.nome = dados.nome();
         this.dataAdimissao = dados.dataAdmissao();
         this.loja = dados.loja();
         this.loja.adicionarFuncionario(this);
+        this.status = StatusDeFerias.EM_DIA;
     }
 
     public void atualizarDadosFuncionario(DadosAtualizacaoFuncionario dados) {
@@ -49,7 +56,4 @@ public class Funcionario {
         }
     }
 
-    public void mudarStatusParaFeriasVencidas() {
-        this.fericasVencidas = true;
-    }
 }
