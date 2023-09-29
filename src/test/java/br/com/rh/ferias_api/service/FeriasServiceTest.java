@@ -5,11 +5,14 @@ import br.com.rh.ferias_api.dto.request.DadosCadastroFuncionario;
 import br.com.rh.ferias_api.dto.request.DadosCadastroLoja;
 import br.com.rh.ferias_api.model.Funcionario;
 import br.com.rh.ferias_api.model.Loja;
+import br.com.rh.ferias_api.model.StatusDeFerias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class FeriasServiceTest {
@@ -33,8 +36,10 @@ public class FeriasServiceTest {
     @Test
     void verificaSeAsFeriasEstaoVencidas() {
         LocalDate dataAdmissao = LocalDate.of(2022, 2, 1);
-        var DadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao,null);
+        var dadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao,null);
+        this.funcionario.atualizarDadosFuncionario(dadosAtualizacaoFuncionario);
         this.feriasService.verificaFerias(this.funcionario);
 
+        assertEquals(StatusDeFerias.PRIMEIRA_FERIAS_VENCIDA, this.funcionario.getStatus());
     }
 }

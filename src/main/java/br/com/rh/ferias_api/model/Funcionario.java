@@ -40,8 +40,8 @@ public class Funcionario {
         this.nome = dados.nome();
         this.dataAdimissao = dados.dataAdmissao();
         this.loja = dados.loja();
-        this.loja.adicionarFuncionario(this);
         this.status = StatusDeFerias.EM_DIA;
+        this.loja.adicionarFuncionario(this);
     }
 
     public void atualizarDadosFuncionario(DadosAtualizacaoFuncionario dados) {

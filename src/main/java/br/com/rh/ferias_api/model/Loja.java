@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Loja")
@@ -26,6 +27,7 @@ public class Loja {
 
     public Loja(DadosCadastroLoja dados) {
         this.nome = dados.nome();
+        this.funcionarios = new ArrayList<>();
     }
 
     public void adicionarFuncionario(Funcionario funcionario) {
