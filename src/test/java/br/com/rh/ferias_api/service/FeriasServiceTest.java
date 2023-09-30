@@ -34,12 +34,32 @@ public class FeriasServiceTest {
     }
 
     @Test
-    void verificaSeAsFeriasEstaoVencidas() {
+    void verificarPrimeiraFeriasVencidas() {
         LocalDate dataAdmissao = LocalDate.of(2022, 2, 1);
-        var dadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao,null);
+        var dadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao, null);
         this.funcionario.atualizarDadosFuncionario(dadosAtualizacaoFuncionario);
         this.feriasService.verificaFerias(this.funcionario);
 
         assertEquals(StatusDeFerias.PRIMEIRA_FERIAS_VENCIDA, this.funcionario.getStatus());
+    }
+
+    @Test
+    void verificarSegundaFeriasProximoDeVencer() {
+        var dataAdmissao = LocalDate.of(2021, 12, 1);
+        var dadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao, null);
+        this.funcionario.atualizarDadosFuncionario(dadosAtualizacaoFuncionario);
+        this.feriasService.verificaFerias(this.funcionario);
+
+        assertEquals(StatusDeFerias.SEGUNDA_FERIAS_PROXIMO_DE_VENCER, this.funcionario.getStatus());
+    }
+
+    @Test
+    void verificaSegundaFeriasVencidas() {
+        var dataAdmissao = LocalDate.of(2021, 9, 1);
+        var dadosAtualizacaoFuncionario = new DadosAtualizacaoFuncionario(1L, null, dataAdmissao, null);
+        this.funcionario.atualizarDadosFuncionario(dadosAtualizacaoFuncionario);
+        this.feriasService.verificaFerias(this.funcionario);
+
+        assertEquals(StatusDeFerias.SEGUNDA_FERIAS_VENCIDA, this.funcionario.getStatus());
     }
 }
